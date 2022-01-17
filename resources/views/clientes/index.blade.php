@@ -17,17 +17,16 @@
             <div class="col">
                 {{-- Buscador (filtro) --}}
                 <form method="post">
-                    
-                    <input type="hidden" name="_method" value="POST" onkeyup="filtro(); return false;" id="postFiltro">
+                    <input type="hidden" name="_method" value="POST"  id="postFiltro">
                     <div class="form-outline">
-                        <input type="search" id="search" name="nombre" class="form-control" placeholder="Buscar por nombre..." aria-label="Search" />
+                        <input type="search" id="search" name="nombre" class="form-control" placeholder="Buscar por nombre..." aria-label="Search" onkeyup="filtro(); return false;"/>
                     </div>
                 </form>
             </div>
             <div class="col">
                 {{-- Route::get('/clientes/create',[ClienteController::class,'create'])->name('clientes.create'); --}}
                 <form action="{{route('clientes.create')}}" method="post">
-                    
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <input type="hidden" name="_method" value="GET">
                     <input type="submit" class="btn btn-primary" value="Nuevo cliente">
                 </form>
@@ -53,7 +52,7 @@
                 <td>
                     {{-- Route::get('/clientes/{cliente}/edit',[ClienteController::class,'edit'])->name('clientes.edit'); --}}
                     <form action="{{route('clientes.edit',['cliente'=>$cliente->id])}}" method="post">
-                        
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                         <input type="hidden" name="_method" value="GET">
                         <button class= "btn btn-secondary" type="submit" value="Edit">Editar</button>
                     </form>
@@ -61,7 +60,6 @@
                 <td>
                     {{-- Route::delete('/clientes/{cliente}',[ClienteController::class,'destroy'])->name('clientes.destroy'); --}}
                     <form method="post">
-                        
                         <input type="hidden" name="_method" value="DELETE">
                         <button class= "btn btn-danger" type="submit" value="Delete">Eliminar</button>
                     </form>
