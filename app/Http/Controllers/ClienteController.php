@@ -88,12 +88,12 @@ class ClienteController extends Controller
     {
         try {
             DB::delete('delete from clientes where id=?',[$cliente->id]);
-            
-            return redirect()->route('clientes.index');
-        } catch (\Throwable $th) {
-            //return response()->json(array('resultado'=> 'NOK: '.$throw->$th));
-            throw $th;
-        }
+            //return redirect()->route('clientes.index');
+   
+            return response()->json(array('resultado'=> 'OK'));
+      } catch (\Throwable $th) {
+            return response()->json(array('resultado'=> 'NOK: '.$th->getMessage()));
+      }
         
     }
 
