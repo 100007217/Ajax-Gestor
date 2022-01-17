@@ -69,8 +69,8 @@ function filtro() {
                     recarga += '</td>'
                     recarga += '<td>'
                     recarga += '<form method="post">'
-                    recarga += '<input type="hidden" name="_method" value="DELETE">'
-                    recarga += '<button class= "btn btn-danger" type="submit" value="Delete">Eliminar</button>'
+                    recarga += '<input type="hidden" name="_method" value="DELETE" id="deleteCliente">'
+                    recarga += '<button class= "btn btn-danger" type="submit" value="Delete" onclick="eliminar(' + $respuesta[i].id + '); return false;">Eliminar</button>'
                     recarga += '</form>'
                     recarga += '</td>'
                     recarga += '</tr>'
@@ -86,4 +86,54 @@ function filtro() {
         send(string)->Sends the request to the server (used for POST)
         */
     ajax.send(formData)
+}
+
+function eliminar(cliente_id) {
+    /* Obtener elemento html donde introduciremos la recarga (datos o mensajes) */
+    var message = document.getElementById("message")
+        /* 
+    Obtener elemento/s que se pasarán como parámetros: token, method, inputs... 
+    var token = document.getElementById('token').getAttribute("content");
+ 
+    Usar el objeto FormData para guardar los parámetros que se enviarán:
+    var formData = new FormData();
+    formData.append('_token', token);
+    formData.append('clave', valor);
+    */
+    var token = document.getElementById('token').getAttribute("content");
+    var method = document.getElementById('deleteCliente').value;
+
+    var formData = new FormData();
+    formData.append('_token', token);
+    formData.append('_method', method);
+
+    /* Inicializar un objeto AJAX */
+    var ajax = objetoAjax();
+    /*
+    ajax.open("method", "rutaURL", true);
+    GET  -> No envía parámetros
+    POST -> Sí envía parámetros
+    true -> asynchronous
+    */
+    ajax.open("POST", "clientes/" + cliente_id, true);
+    ajax.onreadystatechange = function() {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                var respuesta = JSON.parse(this.responseText);
+                if (respuesta.resultado == "OK") {
+                    message.innerHTML = "Borrado"
+                        /* creación de estructura: la estructura que creamos no ha de contener código php ni código blade*/
+                        /* utilizamos innerHTML para introduciremos la recarga en el elemento html pertinente */
+                } else {
+                    message.innerHTML = "Borrado mal"
+                        /* creación de estructura: la estructura que creamos no ha de contener código php ni código blade*/
+                        /* utilizamos innerHTML para introduciremos la recarga en el elemento html pertinente */
+                }
+
+            }
+            filtro();
+        }
+        /*
+        send(string)->Sends the request to the server (used for POST)
+        */
+    ajax.send(formData);
 }

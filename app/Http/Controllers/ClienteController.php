@@ -86,8 +86,15 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        DB::delete('delete from clientes where id=?',[$cliente->id]);
-        return redirect()->route('clientes.index');
+        try {
+            DB::delete('delete from clientes where id=?',[$cliente->id]);
+            
+            return redirect()->route('clientes.index');
+        } catch (\Throwable $th) {
+            //return response()->json(array('resultado'=> 'NOK: '.$throw->$th));
+            throw $th;
+        }
+        
     }
 
     /* Funciones customizadas *******************************************/
