@@ -39,7 +39,7 @@ function filtro() {
     POST -> Sí envía parámetros
     true -> asynchronous
     */
-    ajax.open("POST", "./clientes/shows", true);
+    ajax.open("POST", "/clientes/shows", true);
     ajax.onreadystatechange = function() {
             if (ajax.readyState == 4 && ajax.status == 200) {
                 var respuesta = JSON.parse(this.responseText);
@@ -68,6 +68,7 @@ function filtro() {
                     recarga += '</form>'
                     recarga += '</td>'
                     recarga += '<td>'
+                        //ELIMINAR
                     recarga += '<form method="post">'
                     recarga += '<input type="hidden" name="_method" value="DELETE" id="deleteCliente">'
                     recarga += '<button class= "btn btn-danger" type="submit" value="Delete" onclick="eliminar(' + $respuesta[i].id + '); return false;">Eliminar</button>'
